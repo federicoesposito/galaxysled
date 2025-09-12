@@ -1,0 +1,84 @@
+# galaxySLED: a code to reproduce and fit a galaxy CO SLED
+# Copyright (C) 2023  Federico Esposito
+
+
+
+### galaxySLED -- Releases 0 :: testing the code on PyPI
+
+August 26, 2024 -- Release 0.0.1 (testPyPI)
+* the code (already on GitHub) is packaged
+* first upload on testPyPI
+
+August 30, 2024 -- Release 0.0.2 (testPyPI)
+* trying to fix dependencies
+
+September 2, 2024 -- Release 0.0.3 (testPyPI)
+* still trying to fix dependencies
+
+September 2, 2024 -- Release 0.0.4 (PyPI)
+* pip install now correctly install dependencies
+* released on testPyPI and PyPI
+
+September 3, 2024 --  Release 0.0.5 (PyPI)
+* include the src/galaxysled/resources directory
+* new MANIFEST.in file to declare the resources directory
+* import files in gmcs.py now works with pkgutil and BytesIO
+* for some reasons this version gives errors when twine upload dist/*
+
+September 3, 2024 -- Release 0.0.6 (PyPI)
+* include import modules in __init__.py file
+* change the import commands in every module
+
+September 3, 2024 -- Release 0.0.7
+* docs directory: include tutorial with Jupyter Notebook
+* updated README.md with IPython kernel instructions
+* fixed a bug in the functions.gmc_fill function
+* changed all GMC files to e24 to reflect the paper publishing year
+* included tqdm as a dependency in pyproject.toml
+
+September 3, 2024 -- Release 0.1.0 (PyPI)
+* updated MANIFEST.in to include only the docs/galaxySLED_notebook.ipynb file
+
+September 4, 2024 -- Release 0.1.1 (PyPI)
+* testing with Python 3.6.5 (py36env)
+* pyproject.toml: changed requires-python >=3.8 to >=3.6
+* pyproject.toml: changed requires setuptools>=60 to >=59
+* pyproject.toml: changed requires setuptools-scm>=8.0 to >=6.0
+* including a setup.py file for backward compatibility
+* changed all packages versions to >= the py36requirements.txt
+* removed the './' leading the calling of the resources/ directory in gmcs.py
+
+September 4, 2024 -- Release 0.1.2 (PyPI)
+* testing with Python 3.12.5
+* added "setuptools>=59.6.0" in the pyproject.toml and setup.py files
+* added "h5py>=3.1.0" in the pyproject.toml and setup.py files
+* updated requires-python = ">=3.6, <4" in pyproject.toml
+* removing the dataclasses requirement (only for Python3.6)
+* updated README.md to suggest upgrading pip and Kernel menu (for old Jupyters)
+* notebook tested with Python 3.6.5
+* notebook tested with Python 3.8.10
+* notebook not working with Python 3.12.5 (function gmc_fill)
+* notebook not working with Python 3.10.14 (function gmc_fill)
+
+September 6, 2024 -- Release 0.1.3 (PyPI)
+* testing with conda and Python 3.12.5 (condapy39testenv)
+* fixed the data type problem in the gmc_fill function (added a dot after 0)
+* added some r'' in the notebook to avoid Syntax errors
+* successfully tested the notebook with conda and Python 3.12.5 (condapy312testenv)
+
+September 6, 2024 -- Release 0.1.4 (PyPI, github)
+* removed __init__.py from the resources subdirectory
+* added tests/test_gmc_fill.py to MANIFEST.in, setup.py, pyproject.toml
+
+September 7, 2024 -- Release 0.1.5 (PyPI, github)
+* updated README.md with all recent changes
+* updated galaxySLED_notebook.ipynb with all recent changes
+
+October 4, 2024 -- Release 0.1.6 (PyPI, github)
+* added f24 list of GMCs with Sigma=500 Msun/pc^2 and Mach=20
+* did NOT update README.md with the new GMCs
+
+September 12, 2025 -- Release 0.1.7 (PyPI, github)
+* fixed 3sigma upper limit error in the SLED_errors and MCMC_lnlike functions (functions_mcmc.py)
+* did NOT update README.md with the new GMCs
+
