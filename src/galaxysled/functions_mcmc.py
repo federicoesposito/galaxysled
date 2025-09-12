@@ -36,7 +36,7 @@ def SLED_errors(obSLED, thresh=None):
                 if thresh and (ob_err < thresh * obSLED[0][j]):
                     ob_err = thresh * obSLED[0][j]
             else:
-                y[j] = obSLED[0][j]/3
+                y[j] = obSLED[0][j]
                 ob_err = obSLED[0][j]/3
             yerr.append(ob_err)
         else:
@@ -52,7 +52,7 @@ def MCMC_lnlike(theta, x, y, yerr, yulim):
     m = MCMC_model(theta, x)
     Js = range(len(y))
     chi_det = np.nansum([((y[j] - m[j])/yerr[j])**2 if yulim[j]==0 else 0 for j in Js])
-    chi_ul = -2*np.nansum([np.log(0.5 * (1 + math.erf((y[j] - m[j]) / (y[j]*np.sqrt(2))))) if yulim[j]==1 else 0 for j in Js])
+    chi_ul = -2*np.nansum([np.log(0.5 * (1 + math.erf((y[j] - m[j]) / (yerr[j]*np.sqrt(2))))) if yulim[j]==1 else 0 for j in Js])
     return - 0.5 * (chi_det + chi_ul)
 
 def MCMC_lnprior(theta):
