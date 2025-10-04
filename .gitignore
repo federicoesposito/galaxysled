@@ -1,0 +1,16 @@
+# dist and egg-info directory
+dist/
+src/galaxysled.egg_info/
+
+# unnecessary files in the ngc7469 directory
+docs/ngc7469/*.h5
+docs/ngc7469/*.png
+docs/ngc7469/*.csv
+
+# but do NOT ignore this csv file
+!docs/ngc7469/GMCs_Nradii74_a164.csv
+
+# other unnecessary file
+docs/.ipynb_checkpoints
+.DS_Store
+qr.png

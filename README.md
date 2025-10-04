@@ -1,6 +1,6 @@
 # galaxySLED: a code to reproduce and fit a galaxy CO SLED
 A new physically-motivated model for estimating the molecular line emission in active galaxies.
-The underlying model is described in [Esposito et al. 2024b](https://ui.adsabs.harvard.edu/abs/2024MNRAS.527.8727E/abstract), and it has been tested with the galaxies data presented in [Esposito et al. 2022](https://ui.adsabs.harvard.edu/abs/2022MNRAS.512..686E/abstract).
+The underlying model is described in [Esposito et al. 2024](https://ui.adsabs.harvard.edu/abs/2024MNRAS.527.8727E/abstract), and it has been tested with the galaxies data presented in [Esposito et al. 2022](https://ui.adsabs.harvard.edu/abs/2022MNRAS.512..686E/abstract).
 
 The model takes into account:
 - the internal density structure of giant molecular clouds (GMCs)
@@ -63,7 +63,7 @@ Now type `jupyter notebook` in the terminal to open Jupyter, and open the `.ipyn
 * * *
 
 ## What are the contents of the code directories
-The `src/galaxysled/resources` directory contains the PDR and XDR emission for different Giant Molecular Clouds (GMCs). At the moment there is only one model of 15 GMCs (which is the one described in Esposito et al., 2024b). There is one file, `GMC_e24.csv`, which contains the description of each GMC (as their masses, radii, etc). The other files, 2 for each GMC, contain the PDR and XDR estimated emission: every column is a CO line, where `CO4` means the CO(4-3) line, and every row is a different incident flux.
+The `src/galaxysled/resources` directory contains the PDR and XDR emission for different Giant Molecular Clouds (GMCs). At the moment there is only one model of 15 GMCs (which is the one described in Esposito et al., 2024). There is one file, `GMC_e24.csv`, which contains the description of each GMC (as their masses, radii, etc). The other files, 2 for each GMC, contain the PDR and XDR estimated emission: every column is a CO line, where `CO4` means the CO(4-3) line, and every row is a different incident flux.
 
 The `src/galaxysled` directory contains the Python modules with the functions that run the different parts of the code. The `gmcs.py` module contains the definition of the GMC class and the list of the available built-in GMCs. The `functions.py` module contains all the useful functions. The `functions_mcmc.py` contains some functions for a Markov chain Monte Carlo (MCMC) analysis. The `__init__.py` file is used to initialize the galaxySLED package by importing the module packages.
 
@@ -77,7 +77,7 @@ The `docs/ngc7469` directory contains a single `.csv` file, which can be reprodu
 
 Thanks to Xavier López López, Dr. Francesco Salvestrini, and Dr. Giovanna Speranza for patiently testing the code.
 
-Thanks to all the co-authors of the [Esposito et al. 2024b](https://ui.adsabs.harvard.edu/abs/2024MNRAS.527.8727E/abstract) paper for helping me building the model. You can find more acknowledgements at the end of the paper.
+Thanks to all the co-authors of the [Esposito et al. 2024](https://ui.adsabs.harvard.edu/abs/2024MNRAS.527.8727E/abstract) paper for helping me building the model. You can find more acknowledgements at the end of the paper.
 
 The galaxySLED logo uses the following icon: 
 <a href="https://www.flaticon.com/free-icons/black-hole" title="black hole icons">Black hole icons created by Freepik - Flaticon</a>

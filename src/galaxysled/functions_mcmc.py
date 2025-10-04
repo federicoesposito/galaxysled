@@ -46,10 +46,11 @@ def SLED_errors(obSLED, thresh=None):
 def MCMC_model(theta, x):
     alphaCO, logNH = theta
     galdf, gmcs, logLX, FUVparams, G0floor, Jmax, alphaCOin = x
-    return baseline_sled(galdf, gmcs, logLX, FUVparams, flatNH=logNH, G0floor=G0floor, Jmax=Jmax)[2] * alphaCO/alphaCOin
+    blSLED = baseline_sled(galdf, gmcs, logLX, FUVparams, flatNH=logNH, G0floor=G0floor, Jmax=Jmax)
+    return [sled * alphaCO/alphaCOin for sled in blSLED]
 
 def MCMC_lnlike(theta, x, y, yerr, yulim):
-    m = MCMC_model(theta, x)
+    m = MCMC_model(theta, x)[2]
     Js = range(len(y))
     chi_det = np.nansum([((y[j] - m[j])/yerr[j])**2 if yulim[j]==0 else 0 for j in Js])
     chi_ul = -2*np.nansum([np.log(0.5 * (1 + math.erf((y[j] - m[j]) / (yerr[j]*np.sqrt(2))))) if yulim[j]==1 else 0 for j in Js])
@@ -95,7 +96,7 @@ def MCMC_plotter(samples, data, savepng=None):
     fig, ax = plt.subplots(1, 1, figsize=(7,4))
     ax.errorbar(Jupp, y, yerr=yerr, uplims=yulim, label='Observed', color='k', capsize=3, lw=3, zorder=10)
     for theta in samples[np.random.randint(len(samples), size=100)]:
-        ax.plot(Jupp, MCMC_model(theta, x), color="r", alpha=0.1)
+        ax.plot(Jupp, MCMC_model(theta, x)[2], color="r", alpha=0.1)
     ax.set_xticks(Jupp)
     ax.set_xlabel(r'$J_{upp}$')
     ax.set_ylabel(r'$L_{CO(J \rightarrow J-1)}$ $[L_{\odot}]$')
@@ -110,7 +111,7 @@ def MCMC_sample_walkers(nsamples, flattened_chain, x):
     draw = np.floor(np.random.uniform(0, len(flattened_chain), size=nsamples)).astype(int)
     thetas = flattened_chain[draw]
     for i in thetas:
-        mod = MCMC_model(i, x)
+        mod = MCMC_model(i, x)[2]
         models.append(mod)
     spread = np.std(models, axis=0)
     med_model = np.median(models, axis=0)
@@ -140,14 +141,14 @@ def MCMC_spread_plotter(samples, log_prob, data, nsamples, plot_base=False, save
         ax.plot(Jupp, blSLED[2], label=bllab, color='#ff7f00', lw=2, zorder=4)
     for i, theta in enumerate(samples[np.random.randint(len(samples), size=nsamples)]):
         lab = 'MCMC sampled models (%1d randomly selected)' % nsamples if i == 0 else '_nolabel_'
-        ax.plot(Jupp, MCMC_model(theta, x), color='darkred', alpha=.1, label=lab, zorder=1)
+        ax.plot(Jupp, MCMC_model(theta, x)[2], color='darkred', alpha=.1, label=lab, zorder=1)
     med_model, spread = MCMC_sample_walkers(nsamples, samples, x)
     pslab = r'$1\sigma$ Posterior Spread (%s, %s)' % tuple(print_results(samples))
     FBkwargs = {'fc': '#dede00', 'ec': None, 'alpha': 0.5}
     ax.fill_between(Jupp, med_model-spread, med_model+spread, label=pslab, **FBkwargs, zorder=2)
     theta_max = samples[np.argmax(log_prob)]
-    best_fit_model = MCMC_model(theta_max, x)
-    bflab = r'Highest likelihood model ($\alpha_{CO}$ = %.2f, log$N_H$ = %.2f)' % tuple(theta_max)
+    best_fit_model = MCMC_model(theta_max, x)[2]
+    bflab = r'Highest-likelihood model ($\alpha_{CO}$ = %.2f, log$N_H$ = %.2f)' % tuple(theta_max)
     ax.plot(Jupp, best_fit_model, label=bflab, color='mediumblue', lw=1.5, zorder=3)
     ax.set_ylabel(r'$L_{CO(J \rightarrow J-1)}$ $[L_{\odot}]$')
     ax.set_yscale('log')
@@ -175,9 +176,9 @@ def MCMC_spread_plotter(samples, log_prob, data, nsamples, plot_base=False, save
         plt.savefig('%sMCMC%s' % (savepng, pngname), dpi=300, bbox_inches='tight', facecolor='w')
         plt.close()
 
-def MCMC_cornerplot(samples, ndim, savepng=None):
+def MCMC_cornerplot(samples, ndim, savepng=None, quantiles=[.16,.5,.84]):
     labels = ['alphaCO','logNH']
-    fig = corner.corner(samples, show_titles=True, labels=labels, plot_datapoints=True, quantiles=[.16,.5,.84])
+    fig = corner.corner(samples, show_titles=True, labels=labels, plot_datapoints=True, quantiles=quantiles)
     ax = np.array(fig.axes).reshape((ndim, ndim))[0,1]
     if savepng:
         plt.savefig('%sMCMC_corner.png' % savepng, dpi=300, bbox_inches='tight', facecolor='w')
