@@ -83,3 +83,8 @@ September 12, 2025 -- Release 0.1.7 (PyPI, github)
 * did NOT update README.md with the new GMCs
 
 October 4, 2025 -- Release 0.1.8 (PyPI, github)
+* added CO up to J=20-19 to the f24 GMCs
+* edited functions_MCMC.py to output also PDR and XDR components from the MCMC_model function
+* added a related cell to the notebook
+* set up local git and configured git commit and push
+* changed github repo name: "galaxySLED" --> "galaxysled"
